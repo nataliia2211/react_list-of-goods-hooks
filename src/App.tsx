@@ -16,13 +16,15 @@ export const goodsFromServer = [
   'Garlic',
 ];
 
+enum SortType {
+  SORT_ALPHABETICALLY = 'Sort alphabetically',
+  SORT_BY_LENGTH = 'Sort by length',
+}
+
 interface SortedParams {
   sortField: string;
   reversed: boolean;
 }
-
-const SORT_ALPHABETICALLY = 'Sort alphabetically';
-const SORT_BY_LENGTH = 'Sort by length';
 
 function getPreparedGoods(
   goods: string[],
@@ -32,11 +34,11 @@ function getPreparedGoods(
 
   if (sortField) {
     preparedGoods.sort((good1, good2) => {
-      if (sortField === SORT_ALPHABETICALLY) {
+      if (sortField === SortType.SORT_ALPHABETICALLY) {
         return good1.localeCompare(good2);
       }
 
-      if (sortField === SORT_BY_LENGTH) {
+      if (sortField === SortType.SORT_BY_LENGTH) {
         return good1.length - good2.length;
       }
 
@@ -70,9 +72,9 @@ export const App: React.FC = () => {
       <div className="buttons">
         <button
           type="button"
-          onClick={() => setSortField(SORT_ALPHABETICALLY)}
+          onClick={() => setSortField(SortType.SORT_ALPHABETICALLY)}
           className={cn('button', 'is-info', {
-            'is-light': sortField !== SORT_ALPHABETICALLY,
+            'is-light': sortField !== SortType.SORT_ALPHABETICALLY,
           })}
         >
           Sort alphabetically
@@ -80,9 +82,9 @@ export const App: React.FC = () => {
 
         <button
           type="button"
-          onClick={() => setSortField(SORT_BY_LENGTH)}
+          onClick={() => setSortField(SortType.SORT_BY_LENGTH)}
           className={cn('button', 'is-success', {
-            'is-light': sortField !== SORT_BY_LENGTH,
+            'is-light': sortField !== SortType.SORT_BY_LENGTH,
           })}
         >
           Sort by length
@@ -119,36 +121,3 @@ export const App: React.FC = () => {
     </div>
   );
 };
-
-// return (
-//   <div className="section content">
-//     <div className="buttons">
-//       <button type="button" className="button is-info is-light">
-//         Sort alphabetically
-//       </button>
-
-//       <button type="button" className="button is-success is-light">
-//         Sort by length
-//       </button>
-
-//       <button type="button" className="button is-warning is-light">
-//         Reverse
-//       </button>
-
-//       <button type="button" className="button is-danger is-light">
-//         Reset
-//       </button>
-//     </div>
-
-//     <ul>
-//       <ul>
-//         <li data-cy="Good">Dumplings</li>
-//         <li data-cy="Good">Carrot</li>
-//         <li data-cy="Good">Eggs</li>
-//         <li data-cy="Good">Ice cream</li>
-//         <li data-cy="Good">Apple</li>
-//         <li data-cy="Good">...</li>
-//       </ul>
-//     </ul>
-//   </div>
-// );
